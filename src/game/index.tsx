@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 魔丸模式：把五件展品串成一款第三人称无尽躲避游戏。
  *
  * 组合方式：
@@ -317,98 +317,6 @@ export default function MowanGame() {
         </GameStage>
       </div>
 
-      <section className="mowan-notes" aria-labelledby="mowan-rules-title">
-        <h2 id="mowan-rules-title" className="mowan-notes__title">
-          规则与说明
-        </h2>
-        <div className="mowan-notes__grid">
-          <article className="mowan-note">
-            <h3>满绩渐近线</h3>
-            <table className="mowan-note__table">
-              <thead>
-                <tr>
-                  <th scope="col">距离</th>
-                  <th scope="col">魔丸 GPA</th>
-                  <th scope="col">9 的个数</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1 000 m</td>
-                  <td>3.9</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>1 500 m</td>
-                  <td>3.99</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <td>2 000 m</td>
-                  <td>3.999</td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <td>2 500 m</td>
-                  <td>3.9999</td>
-                  <td>4</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              前 1 000 m 从 0 线性涨到 3.9，之后每多骑 500 m 就多一个 9。数学上 G = 4 − 10<sup>−n</sup>，
-              所以永远小于 4。屏幕上最多画六个 9，再多就写「3.999999…」并注明第几个 9。
-            </p>
-            <p>
-              实现上不用浮点数保存很长的小数：9 的个数由距离的整数阶段算出，显示字符串靠重复拼出来，
-              所以骑到 1×10<sup>12</sup> m 也不会因为精度变成 4.0。
-            </p>
-          </article>
-
-          <article className="mowan-note">
-            <h3>连跳矮墙为什么一定有路</h3>
-            <p>
-              每一排障碍生成时都做一次可达性检查：以上一排「还能待在哪」为起点，按当前车速、转向能力和两排之间的时间
-              算出横向能挪多远，再与本排的净通道取交集。交集为空就换一种排法重来，实在不行退化成正对车头的宽缺口。
-            </p>
-            <p>
-              车速越快，两排之间的时间越短，但通道也越宽——难度靠障碍组合与变窄的缺口上升，而不是无限提速。
-              高速时一帧走过的整段路都参与碰撞检测，不会跨帧穿过薄墙。
-            </p>
-          </article>
-
-          <article className="mowan-note">
-            <h3>数据与出处</h3>
-            <p>
-              车速、加速、转向能力、障碍尺寸与间距都是<strong>玩法设定</strong>，不是这台车的真实性能，也没有实测来源。
-              本页不做工程计算，只把五个展品里的东西拼成一句玩笑。
-            </p>
-            <p>
-              摔车演出里的骨头用的是骨折展品同一份资产：BodyParts3D 的右第 5 趾近节趾骨，
-              CC BY 4.0，Database Center for Life Science。演出是卡通示意，不做血腥表现，也不计算医学意义上的真实损伤。
-            </p>
-            <p>
-              历史纪录按<strong>实际距离</strong>比较：1 480 m 与 1 499 m 都显示 3.99，但后者才是更好的成绩。
-              存档只写在本地浏览器里，没有账号、没有服务器。
-            </p>
-          </article>
-
-          <article className="mowan-note">
-            <h3>已知限制</h3>
-            <ul>
-              <li>首版没有跳跃、飞行、联机与换挡；冲刺只是一个持续两秒左右的加速。</li>
-              <li>按动圆珠笔还没做成车把上的启动键（彩蛋留到下一版）。</li>
-              <li>旁观者模式的指针锁定在受限容器里可能被浏览器拒绝，这时按住拖动也能环顾。</li>
-              <li>窄屏只做了布局与触控按钮的实测，没有在真机上做长时间性能测试。</li>
-              <li>发动机与车架是轻量示意模型，不追求机构正确，也不加载完整展品页面。</li>
-            </ul>
-          </article>
-        </div>
-        <p className="mowan-notes__foot">
-          想回去看原理？<a href="#/exhibit/derailleur">自行车变速</a> · <a href="#/exhibit/engine">发动机</a> ·{' '}
-          <a href="#/exhibit/gpa">GPA</a> · <a href="#/exhibit/bone">骨折</a>
-        </p>
-      </section>
     </div>
   )
 }
