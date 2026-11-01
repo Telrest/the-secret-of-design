@@ -102,6 +102,55 @@
   white-space: nowrap;
 }
 
+/* 索引卡底部的翻页提示：告诉读者下面还有每件展品的详细问题 */
+.index-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--signal);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--signal) 35%, transparent);
+  padding-bottom: 2px;
+}
+
+.index-more:hover {
+  color: var(--signal-ink);
+  border-bottom-color: currentColor;
+}
+
+.index-more:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 3px;
+}
+
+.index-more__arrow {
+  display: inline-block;
+  font-size: 0.95rem;
+  line-height: 1;
+  animation: index-more-nudge 1.9s var(--ease-change) infinite;
+}
+
+@keyframes index-more-nudge {
+  0%,
+  55%,
+  100% {
+    transform: translateY(0);
+  }
+  72% {
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-more__arrow {
+    animation: none;
+  }
+}
+
 /* ---------- 五个问题 ---------- */
 
 .question-list {

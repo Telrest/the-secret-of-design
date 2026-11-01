@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { DimLine, DrawingFrame } from '../components/DrawingFrame'
 import { SectionHead } from '../components/SectionHead'
 import { SourceLegend } from '../components/SourceTag'
@@ -62,6 +62,12 @@ export default function HomePage() {
                 ))}
               </ol>
               <DimLine label="五件展品 · 一条主线：拆开、改变、看见" />
+              <a className="index-more" href="#exhibits">
+                <span className="index-more__arrow" aria-hidden="true">
+                  ↓
+                </span>
+                向下翻，内容更详细
+              </a>
             </DrawingFrame>
           </div>
         </div>
