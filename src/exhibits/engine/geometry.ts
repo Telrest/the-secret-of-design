@@ -61,10 +61,24 @@ export async function createEngineGeometry(): Promise<EngineGeometry> {
   const materialSets = new Map<EnginePart, Set<THREE.MeshStandardMaterial>>()
   const neutral = new Map<THREE.MeshStandardMaterial, THREE.Color>()
   const neutralMaps = new Map<THREE.MeshStandardMaterial, THREE.Texture | null>()
+  /**
+   * 拆解位移（模型单位，X 为气流方向）。
+   *
+   * 规则：整条流道沿轴拉开，相邻组件的轴向间隙 ≥ 0.4，互不穿插；
+   * 外涵机匣整体抬到上方；两根轴不再沿着轴心平移（那样会穿过压气机与涡轮），
+   * 改为压到整机下方、上下叠放，嵌套关系反而更清楚。
+   */
   const explosion: Record<EnginePart, [number, number, number]> = {
-    nacelle: [0, 2.2, 0], fan: [-0.75, 0, 0], lpc: [-0.36, 0, 0], hpc: [0, 0, 0],
-    combustor: [0.4, 0.65, 0], hpt: [0.8, 0, 0], lpt: [1.1, 0, 0],
-    'lp-shaft': [0, -0.35, 0], 'hp-shaft': [0, 0.35, 0], nozzle: [1.65, 0, 0],
+    nacelle: [0, 2.25, 0],
+    fan: [-0.95, 0, 0],
+    lpc: [-0.5, 0, 0],
+    hpc: [0, 0, 0],
+    combustor: [0.55, 0, 0],
+    hpt: [1.05, 0, 0],
+    lpt: [1.55, 0, 0],
+    nozzle: [2.15, 0, 0],
+    'lp-shaft': [0, -1.2, 0],
+    'hp-shaft': [0, -1.85, 0],
   }
   function trackMaterial<T extends THREE.Material>(m: T): T {
     materials.add(m)
