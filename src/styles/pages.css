@@ -102,6 +102,11 @@
   white-space: nowrap;
 }
 
+/* 滚到「五个问题」时给吸顶页头留出位置 */
+.section--exhibits {
+  scroll-margin-top: 96px;
+}
+
 /* 索引卡底部的翻页提示：告诉读者下面还有每件展品的详细问题 */
 .index-more {
   display: inline-flex;

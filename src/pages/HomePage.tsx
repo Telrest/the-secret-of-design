@@ -5,6 +5,22 @@ import { SourceLegend } from '../components/SourceTag'
 import { StatusBadge } from '../components/StatusBadge'
 import { EXHIBITS, EXHIBIT_STATS } from '../exhibits/registry'
 
+/**
+ * 站内跳段。
+ *
+ * 不能用 href="#exhibits"：这是 HashRouter，改 hash 等于换路由，
+ * 会直接掉进 404。所以拦下默认行为，自己滚过去。
+ */
+function scrollToExhibits(event: React.MouseEvent<HTMLAnchorElement>) {
+  event.preventDefault()
+  const target = document.getElementById('exhibits')
+  if (!target) return
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  // 滚完之后把焦点交给这一段，键盘用户接着按 Tab 就是展品列表
+  target.focus({ preventScroll: true })
+}
+
 export default function HomePage() {
   return (
     <main id="main" className="page-home">
@@ -27,7 +43,7 @@ export default function HomePage() {
             </p>
 
             <div className="hero__actions">
-              <a className="btn btn--primary" href="#exhibits">
+              <a className="btn btn--primary" href="#exhibits" onClick={scrollToExhibits}>
                 从第一个问题开始
               </a>
               <Link className="btn" to="/about">
@@ -42,16 +58,7 @@ export default function HomePage() {
           </div>
 
           <div className="hero__drawing">
-            <DrawingFrame
-              label="展馆索引"
-              ariaLabel="展馆索引：五件展品及当前进度"
-              titleBlock={[
-                { label: '图号', value: 'SD-000' },
-                { label: '展品', value: '05' },
-                { label: '开放', value: '00' },
-                { label: '版次', value: '草案' },
-              ]}
-            >
+            <DrawingFrame label="展馆索引" ariaLabel="展馆索引：五件展品及当前进度">
               <ol className="index-list">
                 {EXHIBITS.map((exhibit) => (
                   <li key={exhibit.id} className="index-list__row">
@@ -62,7 +69,7 @@ export default function HomePage() {
                 ))}
               </ol>
               <DimLine label="五件展品 · 一条主线：拆开、改变、看见" />
-              <a className="index-more" href="#exhibits">
+              <a className="index-more" href="#exhibits" onClick={scrollToExhibits}>
                 <span className="index-more__arrow" aria-hidden="true">
                   ↓
                 </span>
@@ -109,7 +116,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------- 五个问题 ---------------- */}
-      <section className="section section--exhibits" id="exhibits">
+      <section className="section section--exhibits" id="exhibits" tabIndex={-1}>
         <div className="shell">
           <SectionHead
             index="01"
