@@ -485,7 +485,7 @@ function HeadroomView({ result, selectedId, onSelect, focusId }: ViewProps) {
         ticks={[0, 1, 2, 3, 4]}
         marker={gpa}
         segments={[
-          { id: 'gained', value: gpa, color: '#2b3f33' },
+          { id: 'gained', value: gpa, color: 'var(--rule)' },
           ...rows.map((row) => ({
             id: row.id,
             value: row.headroom ?? 0,

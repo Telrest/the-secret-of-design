@@ -15,18 +15,6 @@ function BrandMark() {
 export function SiteHeader() {
   return (
     <header className="site-header">
-      {/* 子站上下文：说明这是一座挂在博客实验室下的展馆，而不是独立站点。 */}
-      <div className="blog-context">
-        <div className="shell blog-context__inner">
-          <a className="blog-context__back" href="../../">
-            <span aria-hidden="true">←</span> Telrest 的博客
-          </a>
-          <span className="blog-context__sep" aria-hidden="true">/</span>
-          <a className="blog-context__crumb" href="../../lab/">实验室</a>
-          <span className="blog-context__sep" aria-hidden="true">/</span>
-          <span className="blog-context__current">实验 003 · 设计的秘密</span>
-        </div>
-      </div>
       <div className="shell site-header__inner">
         <NavLink to="/" className="brand" aria-label="设计的秘密 · 返回首页">
           <BrandMark />

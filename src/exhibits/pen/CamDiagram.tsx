@@ -66,7 +66,7 @@ export function CamDiagram({ snapshot }: CamDiagramProps) {
       <svg viewBox="0 0 400 196" role="img" aria-label={`凸轮展开图：当前索引角 ${pose.theta.toFixed(0)} 度，位移 ${pose.x.toFixed(2)} 毫米`}>
         <defs>
           <pattern id="lockHatch" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="0" y2="5" stroke="#e0664c" strokeWidth="0.8" opacity="0.35" />
+            <line x1="0" y1="0" x2="0" y2="5" stroke="var(--signal)" strokeWidth="0.8" opacity="0.35" />
           </pattern>
         </defs>
 
@@ -83,7 +83,7 @@ export function CamDiagram({ snapshot }: CamDiagramProps) {
               x2={PLOT.right}
               y1={ty(line.x)}
               y2={ty(line.x)}
-              stroke="#3c5344"
+              stroke="var(--rule-strong)"
               strokeWidth="0.8"
               strokeDasharray={line.x === PEN.xRetracted || line.x === PEN.xMax ? '4 3' : '2 3'}
             />
@@ -148,13 +148,13 @@ export function CamDiagram({ snapshot }: CamDiagramProps) {
         <path
           d={`${phases.pressing} ${phases.indexing.replace('M', 'L')} ${phases.releasing.replace('M', 'L')} ${phases.settling.replace('M', 'L')}`}
           fill="none"
-          stroke="#e6efe2"
+          stroke="var(--ink)"
           strokeWidth="1"
           strokeDasharray="3 3"
           opacity="0.35"
         />
         {activePath && (
-          <path d={activePath} fill="none" stroke="#e0664c" strokeWidth="2.4" strokeLinecap="round" />
+          <path d={activePath} fill="none" stroke="var(--signal)" strokeWidth="2.4" strokeLinecap="round" />
         )}
 
         {/* 当前位置 */}
@@ -163,15 +163,15 @@ export function CamDiagram({ snapshot }: CamDiagramProps) {
           x2={currentX}
           y1={PLOT.top - 2}
           y2={PLOT.bottom}
-          stroke="#e0664c"
+          stroke="var(--signal)"
           strokeWidth="0.6"
           opacity="0.35"
         />
-        <circle cx={currentX} cy={currentY} r="4.6" fill="#e0664c" />
-        <circle cx={currentX} cy={currentY} r="7.4" fill="none" stroke="#e0664c" strokeWidth="1" opacity="0.4" />
+        <circle cx={currentX} cy={currentY} r="4.6" fill="var(--signal)" />
+        <circle cx={currentX} cy={currentY} r="7.4" fill="none" stroke="var(--signal)" strokeWidth="1" opacity="0.4" />
 
         {/* 坐标轴 */}
-        <line x1={PLOT.left} x2={PLOT.right} y1={PLOT.bottom + 8} y2={PLOT.bottom + 8} stroke="#3c5344" strokeWidth="0.8" />
+        <line x1={PLOT.left} x2={PLOT.right} y1={PLOT.bottom + 8} y2={PLOT.bottom + 8} stroke="var(--rule-strong)" strokeWidth="0.8" />
         <text x={4} y={14} className="cam-diagram__tick">
           x / mm
         </text>

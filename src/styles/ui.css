@@ -59,55 +59,6 @@
   color: var(--signal-ink);
 }
 
-/* ---------- 子站上下文条：说明本站挂在博客实验室下 ---------- */
-.blog-context {
-  border-bottom: 1px solid color-mix(in srgb, var(--rule) 70%, transparent);
-  background: var(--paper-inset);
-  font-size: 12px;
-  line-height: 1;
-}
-
-.blog-context__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  min-height: 38px;
-  padding-block: 8px;
-  color: var(--ink-3);
-}
-
-.blog-context__back,
-.blog-context__crumb {
-  color: var(--ink-2);
-  text-decoration: none;
-  transition: color 0.16s var(--ease-change);
-}
-
-.blog-context__back:hover,
-.blog-context__crumb:hover {
-  color: var(--signal-ink);
-}
-
-.blog-context__sep {
-  color: var(--rule-strong);
-}
-
-.blog-context__current {
-  color: var(--ink-3);
-}
-
-@media (max-width: 640px) {
-  .blog-context {
-    font-size: 11px;
-  }
-
-  .blog-context__inner {
-    min-height: 34px;
-    gap: 6px;
-  }
-}
-
 /* ---------- 站头 ---------- */
 .site-header {
   position: sticky;

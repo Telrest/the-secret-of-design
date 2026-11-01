@@ -8,9 +8,6 @@ export function SiteFooter() {
         <div className="site-footer__col">
           <p className="site-footer__brand">设计的秘密</p>
           <p className="site-footer__note">大学网站作业 · 交互式原理展馆</p>
-          <p className="site-footer__note">
-            <a href="../../">← 回到 Telrest 的博客</a>
-          </p>
         </div>
 
         <div className="site-footer__col">
