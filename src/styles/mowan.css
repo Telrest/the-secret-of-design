@@ -948,7 +948,7 @@
   }
 }
 
-/* ---------- 首页的游戏入口卡 ---------- */
+/* ---------- 首页的游戏入口卡（浅色版：与展馆其它卡片同一套纸面语言） ---------- */
 
 .section--mowan {
   padding-top: clamp(20px, 3vw, 34px);
@@ -960,31 +960,32 @@
   gap: clamp(18px, 3vw, 36px);
   padding: clamp(20px, 3.2vw, 34px);
   background:
-    linear-gradient(90deg, rgba(12, 18, 23, 0.96) 0%, rgba(12, 18, 23, 0.72) 60%, rgba(12, 18, 23, 0.38) 100%),
-    repeating-linear-gradient(90deg, rgba(244, 241, 233, 0.05) 0 1px, transparent 1px 84px),
-    linear-gradient(150deg, #33485a, #1b2731 72%);
-  border: 1px solid #2b3a46;
-  color: var(--game-ink);
-  transition: transform 0.2s var(--ease-change), border-color 0.2s var(--ease-change);
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 5%, transparent) 0 1px, transparent 1px 84px),
+    var(--paper-card);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+  transition: transform 0.2s var(--ease-change), border-color 0.2s var(--ease-change),
+    box-shadow 0.2s var(--ease-change);
 }
 
 .mowan-teaser:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 122, 77, 0.6);
+  border-color: var(--signal);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--ink) 7%, transparent);
 }
 
 .mowan-teaser__eyebrow {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.26em;
-  color: var(--game-gold);
+  color: var(--ink-3);
 }
 
 .mowan-teaser__title {
   margin-top: 10px;
   font-size: clamp(1.25rem, 2.4vw, 1.75rem);
   line-height: 1.35;
-  color: #1f3429;
+  color: var(--ink);
 }
 
 .mowan-teaser__lede {
@@ -992,7 +993,7 @@
   max-width: 52ch;
   font-size: 0.86rem;
   line-height: 1.8;
-  color: rgba(242, 239, 230, 0.76);
+  color: var(--ink-2);
 }
 
 .mowan-teaser__meta {
@@ -1003,7 +1004,7 @@
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.06em;
-  color: rgba(242, 239, 230, 0.5);
+  color: var(--ink-3);
 }
 
 .mowan-teaser__cta {
@@ -1013,23 +1014,28 @@
   margin-top: 18px;
   padding: 9px 16px;
   background: var(--signal);
-  color: #1f3429;
+  color: var(--paper-card);
   font-size: 0.86rem;
   font-weight: 600;
+  transition: background-color 0.15s var(--ease-change);
+}
+
+.mowan-teaser:hover .mowan-teaser__cta {
+  background: color-mix(in srgb, var(--signal) 82%, #000);
 }
 
 .mowan-teaser__board {
   align-self: center;
   padding: 16px 18px;
-  border: 1px solid rgba(242, 239, 230, 0.18);
-  border-top: 2px solid var(--game-gold);
-  background: rgba(10, 15, 20, 0.45);
+  border: 1px solid var(--rule-strong);
+  border-top: 2px solid var(--signal);
+  background: var(--paper-inset);
 }
 
 .mowan-teaser__board-label {
   font-size: 0.68rem;
   letter-spacing: 0.16em;
-  color: var(--game-ink-3);
+  color: var(--ink-3);
 }
 
 .mowan-teaser__board-value {
@@ -1037,14 +1043,14 @@
   font-family: var(--font-mono);
   font-size: clamp(1.5rem, 2.6vw, 2rem);
   font-weight: 700;
-  color: var(--game-gold);
+  color: var(--signal);
 }
 
 .mowan-teaser__board-hint {
   margin-top: 10px;
   font-size: 0.78rem;
   line-height: 1.85;
-  color: rgba(242, 239, 230, 0.7);
+  color: var(--ink-2);
 }
 
 .mowan-teaser__board-list {
@@ -1053,7 +1059,7 @@
   margin-top: 12px;
   font-family: var(--font-mono);
   font-size: 0.76rem;
-  color: rgba(242, 239, 230, 0.72);
+  color: var(--ink-2);
 }
 
 .mowan-teaser__board-list li {
@@ -1061,7 +1067,7 @@
   justify-content: space-between;
   gap: 10px;
   padding-bottom: 3px;
-  border-bottom: 1px dashed rgba(242, 239, 230, 0.12);
+  border-bottom: 1px dashed var(--rule-strong);
 }
 
 .mowan-teaser__board-list li.is-never {
@@ -1074,7 +1080,7 @@
 .mowan-teaser__board-foot {
   margin-top: 10px;
   font-size: 0.68rem;
-  color: rgba(242, 239, 230, 0.42);
+  color: var(--ink-3);
 }
 
 @media (max-width: 820px) {
