@@ -1007,23 +1007,81 @@
   color: var(--ink-3);
 }
 
-.mowan-teaser__cta {
+.mowan-teaser__entry {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+  padding-bottom: 8px;
+}
+
+.mowan-teaser__entry-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 18px;
-  padding: 9px 16px;
-  background: var(--signal);
-  color: var(--paper-card);
-  font-size: 0.86rem;
+  gap: 14px;
+  color: var(--signal-ink);
+  font-size: 1rem;
   font-weight: 600;
-  transition: background-color 0.15s var(--ease-change);
 }
 
-.mowan-teaser:hover .mowan-teaser__cta {
-  background: color-mix(in srgb, var(--signal) 82%, #000);
+.mowan-teaser__entry-label > span {
+  font-size: 1.8rem;
+  line-height: 1;
 }
 
+/* 沿用 cta 标记，让校徽入场仍从真正的启动按钮处展开。 */
+.mowan-teaser__cta {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  padding: 7px;
+  border: 7px solid #343a3d;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#e5bc45 0deg 20deg, #252a2c 20deg 40deg);
+  box-shadow: 0 5px 0 #1b2123, 0 12px 18px -5px rgba(27, 33, 35, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.mowan-teaser__nuclear-cap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ad231f;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 22%, #f78162, #d63b2b 45%, #b42120 85%);
+  color: #ffebaa;
+  box-shadow: 0 5px 0 #751b18, 0 8px 9px rgba(51, 11, 9, 0.48),
+    inset 0 2px 3px rgba(255, 255, 255, 0.48);
+  font-family: 'Segoe UI Symbol', 'Arial Unicode MS', sans-serif;
+  font-size: 35px;
+  line-height: 1;
+  transform: translateY(-3px);
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mowan-teaser__launch-emblem {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(68, 15, 10, 0.35);
+  object-fit: cover;
+}
+.mowan-teaser:hover .mowan-teaser__nuclear-cap,
+.mowan-teaser:focus-visible .mowan-teaser__nuclear-cap {
+  filter: brightness(1.12);
+}
+
+.mowan-teaser:active .mowan-teaser__nuclear-cap {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #751b18, inset 0 1px 3px rgba(255, 255, 255, 0.3);
+}
 .mowan-teaser__board {
   align-self: center;
   padding: 16px 18px;

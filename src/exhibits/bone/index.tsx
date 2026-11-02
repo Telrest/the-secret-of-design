@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { GuideModeNotice } from '../../components/GuideModeNotice'
 import { ExhibitWorkspace } from '../../components/ExhibitWorkspace'
 import { ModelStage } from '../../components/ModelStage'
 import { StepGuide, useGuideIndex } from '../../components/guide/StepGuide'
@@ -410,6 +411,7 @@ export default function BoneExhibit({ mode, onModeChange }: ExhibitModuleProps) 
               onUserOrbit={() => setCameraMoved(true)}
               onFullscreenChange={setFullscreen}
               notice={<>
+                {mode === 'guide' && <GuideModeNotice overlay onExit={() => onModeChange?.('free')} />}
               {fullscreen ? <button className="bone-fullscreen-exit" onClick={() => void exitFullscreen()}>退出全屏</button> : null}
             <p className="bone-stage__meta" aria-hidden="true">
               右足 · 第 5 趾 · {CAMERA_LABELS[state.camera]}

@@ -11,6 +11,7 @@ import './styles/gpa.css'
 import './styles/bone.css'
 import './styles/derailleur.css'
 import './styles/mowan.css'
+import './styles/entrance.css'
 
 const container = document.getElementById('root')
 

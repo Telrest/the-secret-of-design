@@ -1,0 +1,19 @@
+/* 骨骼标注的父层不接收点击；导览提示单独恢复交互并位于标注上方。 */
+.guide-mode-notice--overlay {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 4;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  padding: 6px 8px 6px 12px;
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--signal);
+  background: color-mix(in srgb, var(--paper-card) 96%, transparent);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
+  pointer-events: auto;
+}

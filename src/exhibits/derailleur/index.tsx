@@ -1,4 +1,5 @@
-﻿import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { GuideModeNotice } from '../../components/GuideModeNotice'
 import { ExhibitWorkspace } from '../../components/ExhibitWorkspace'
 import { ModelStage } from '../../components/ModelStage'
 import { StepGuide, useGuideIndex } from '../../components/guide/StepGuide'
@@ -267,6 +268,7 @@ export default function DerailleurExhibit({ mode, onModeChange }: ExhibitModuleP
               ? '旁观者模式：点击画面锁定鼠标 · WASD 移动 · 鼠标环顾 · 滚轮换挡（上滚轻、下滚重） · Q/E 升降 · Shift 加速 · Esc 退出'
               : '拖动旋转 · 滚轮缩放 · 单击零件查看它在当前状态里做什么'
           }
+          notice={mode === 'guide' ? <GuideModeNotice onExit={() => onModeChange?.('free')} /> : undefined}
           resetCameraNonce={resetNonce}
           onUserOrbit={() => setCameraMoved(true)}
           onFullscreenChange={(fullscreen) => setSpectator(fullscreen)}

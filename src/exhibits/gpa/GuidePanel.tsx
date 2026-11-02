@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { GuideModeNotice } from '../../components/GuideModeNotice'
 import { StepGuide } from '../../components/guide/StepGuide'
 import { ChartPanel } from './charts'
 import { GUIDE_COURSES, GUIDE_STEPS } from './content'
@@ -41,6 +42,8 @@ export function GpaGuide({ onExit }: GpaGuideProps) {
       </div>
 
       <GpaSummary result={result} sample={false} saved restored={false} />
+
+      <GuideModeNotice inline onExit={onExit} />
 
       <ChartPanel
         result={result}

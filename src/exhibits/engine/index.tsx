@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { GuideModeNotice } from '../../components/GuideModeNotice'
 import { ExhibitWorkspace } from '../../components/ExhibitWorkspace'
 import { ModelStage } from '../../components/ModelStage'
 import { Button } from '../../components/controls/Button'
@@ -87,6 +88,7 @@ export default function EngineExhibit({ mode, onModeChange }: ExhibitModuleProps
       </div>
       <div className="engine-viewport">
         <ModelStage factory={factory} onFrame={onFrame} resetCameraNonce={resetNonce} className="engine-stage"
+          notice={mode === 'guide' ? <GuideModeNotice onExit={() => onModeChange?.('free')} /> : undefined}
           ariaLabel="双转子涡扇发动机三维模型，可旋转、剖视、拆解并点击零件"
           hint="拖动旋转 · 滚轮缩放 · 点击零件查看作用" fallback={<EngineFallback />} />
         <div className="engine-stage-caption" aria-hidden="true"><span>02 / TURBOFAN</span><span>{display.isolate === 'shafts' ? '同轴嵌套 · 内轴与中空外轴' : display.view === 'exploded' ? '展示拆解 · 非维修顺序' : '进气 → 分流 → 压缩 → 燃烧 → 涡轮 → 排气'}</span></div>

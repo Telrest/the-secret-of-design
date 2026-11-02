@@ -28,6 +28,8 @@ interface GameStageProps {
   /** 每帧回调：音效、跨帧统计这类不进模型的东西 */
   onFrame?: (dt: number) => void
   onReady?: () => void
+  /** 第一帧已画出，或已显示无法加载的原因；入场遮罩可以结束。 */
+  onSettled?: () => void
   className?: string
   /** 叠在画布上的界面（HUD、结算面板、触屏按钮） */
   children?: ReactNode
@@ -41,6 +43,7 @@ export function GameStage({
   onExitSpectator,
   onFrame,
   onReady,
+  onSettled,
   className,
   children,
 }: GameStageProps) {
@@ -120,6 +123,8 @@ export function GameStage({
           })
           observer.observe(host)
         }
+        created.update({ view: game.getView(), quality: qualityRef.current })
+        created.render()
         setStatus('ready')
         readyRef.current?.()
         last = performance.now()
@@ -143,6 +148,10 @@ export function GameStage({
       canvas.remove()
     }
   }, [game, report.ok, restartKey, ariaLabel])
+
+  useEffect(() => {
+    if (status !== 'booting') onSettled?.()
+  }, [status, onSettled])
 
   const software = status === 'ready' && isSoftwareRenderer(report.renderer)
 

@@ -20,6 +20,7 @@ import {
   isFullscreenSupported,
   subscribeFullscreen,
 } from '../lib/fullscreen'
+import { useGameEntrance } from '../components/GameEntrance'
 import { createGameAudio, type GameAudio } from './audio'
 import { CONFIG } from './config'
 import { Hud } from './Hud'
@@ -54,6 +55,7 @@ function SpectatorBar({ onExit }: { onExit: () => void }) {
 }
 
 export default function MowanGame() {
+  const { settled, active: entering } = useGameEntrance()
   const audioRef = useRef<GameAudio | null>(null)
   const keysRef = useRef<Set<string>>(new Set())
   const shellRef = useRef<HTMLDivElement | null>(null)
@@ -109,10 +111,11 @@ export default function MowanGame() {
   }, [])
 
   const startGame = useCallback(() => {
+    if (!ready || entering) return
     ensureAudio()
     keysRef.current.clear()
     game.start()
-  }, [ensureAudio, game])
+  }, [ensureAudio, game, ready, entering])
 
   /* ---------------- 键盘 ---------------- */
 
@@ -125,6 +128,7 @@ export default function MowanGame() {
     }
 
     const onKeyDown = (event: KeyboardEvent) => {
+      if (entering) return
       const target = event.target as HTMLElement | null
       const typing =
         target &&
@@ -208,7 +212,7 @@ export default function MowanGame() {
       window.removeEventListener('blur', releaseAll)
       document.removeEventListener('visibilitychange', onVisibility)
     }
-  }, [game, startGame])
+  }, [game, startGame, entering])
 
   /* ---------------- 全屏 ---------------- */
 
@@ -245,6 +249,7 @@ export default function MowanGame() {
           quality={quality}
           onFrame={onFrame}
           onReady={() => setReady(true)}
+          onSettled={settled}
           onExitSpectator={() => game.exitSpectator()}
           ariaLabel="魔丸模式：第三人称无尽躲避游戏，骑着一辆装了航空发动机的自行车躲开一排排低矮的连跳墙"
           className="mowan-stage--play"

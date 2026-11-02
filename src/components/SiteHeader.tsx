@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useGameEntrance } from './GameEntrance'
 
 /** 站名标记：一枚图纸角标，不用位图，缩放不糊 */
 function BrandMark() {
@@ -13,6 +14,7 @@ function BrandMark() {
 }
 
 export function SiteHeader() {
+  const { enter } = useGameEntrance()
   return (
     <header className="site-header">
       <div className="shell site-header__inner">
@@ -28,7 +30,7 @@ export function SiteHeader() {
           <NavLink to="/" end className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}>
             首页
           </NavLink>
-          <NavLink to="/game" className={({ isActive }) => `site-nav__link site-nav__link--play${isActive ? ' is-active' : ''}`}>
+          <NavLink to="/game" onClick={enter} className={({ isActive }) => `site-nav__link site-nav__link--play${isActive ? ' is-active' : ''}`}>
             魔丸模式
           </NavLink>
           <NavLink to="/about" className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}>

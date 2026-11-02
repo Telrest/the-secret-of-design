@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom'
-import { EXHIBIT_STATS } from '../exhibits/registry'
+
+function scrollToTop() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
+  document.querySelector<HTMLAnchorElement>('.site-header .brand')?.focus({ preventScroll: true })
+}
 
 export function SiteFooter() {
   return (
@@ -11,14 +16,6 @@ export function SiteFooter() {
         </div>
 
         <div className="site-footer__col">
-          <p className="site-footer__label">当前进度</p>
-          <p className="site-footer__note">
-            共 {EXHIBIT_STATS.total} 件展品，已开放 {EXHIBIT_STATS.ready} 件，
-            {EXHIBIT_STATS.building} 件显示制作中。
-          </p>
-        </div>
-
-        <div className="site-footer__col">
           <p className="site-footer__label">参考与许可</p>
           <p className="site-footer__note">
             建模与验证方法参考{' '}
@@ -27,6 +24,12 @@ export function SiteFooter() {
             </a>
             （MIT）。完整来源见 <Link to="/about">关于展馆</Link>。
           </p>
+        </div>
+        <div className="site-footer__top">
+          <button type="button" className="btn site-footer__top-button" onClick={scrollToTop}>
+            <span aria-hidden="true">↑</span>
+            回到顶部
+          </button>
         </div>
       </div>
     </footer>

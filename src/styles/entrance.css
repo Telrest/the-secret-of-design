@@ -1,0 +1,144 @@
+/* 魔丸入场：真实三维徽章 + 位移动画 + 连续光束，无频闪。 */
+.game-entrance {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  isolation: isolate;
+  overflow: hidden;
+  color: #f3f8ff;
+  font-family: var(--font-sans);
+  opacity: 1;
+  transition: opacity 900ms ease;
+}
+.game-entrance.is-leaving { opacity: 0; }
+.game-entrance__dark {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, #164c79, #071a30 58%, #030b17);
+  animation: entrance-darken 900ms ease both;
+}
+.game-entrance__halo {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #fff 0%, #e9f9ff 5%, #97e1ffb8 17%, #4197c94d 37%, transparent 65%);
+  opacity: 0;
+}
+.game-entrance.has-arrived .game-entrance__halo {
+  animation: entrance-light 1300ms ease forwards;
+}
+.game-entrance__rays {
+  position: absolute;
+  width: 240vmax;
+  height: 240vmax;
+  left: calc(50% - 120vmax);
+  top: calc(50% - 120vmax);
+  background: repeating-conic-gradient(from 8deg, transparent 0deg 9deg, #b8eeff05 10deg, #e5faff85 12deg, transparent 16deg 26deg, #e5faff38 28deg, transparent 31deg);
+  mask-image: radial-gradient(circle, transparent 0%, #000 5%, #000 42%, transparent 65%);
+  opacity: 0;
+}
+.game-entrance.has-arrived .game-entrance__rays {
+  animation: entrance-rays-appear 1200ms ease forwards, entrance-rays-turn 32s linear infinite;
+}
+.game-entrance__flight {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(190px, 28vw, 290px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  transform-origin: center;
+  filter: drop-shadow(0 0 16px #b4edffb3) drop-shadow(0 12px 26px #03112899);
+  animation: entrance-flight 1800ms cubic-bezier(0.18, 0.68, 0.24, 1) both;
+  will-change: transform;
+}
+.game-entrance__badge {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.game-entrance.has-arrived .game-entrance__badge {
+  animation: entrance-charge 1400ms ease-out both;
+}
+.game-entrance.is-leaving .game-entrance__badge {
+  animation: entrance-depart 900ms cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+.game-entrance__model {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.game-entrance__model.is-ready { opacity: 1; }
+.game-entrance__model canvas { width: 100%; height: 100%; max-width: none; }
+.game-entrance__fallback {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  left: 20%;
+  top: 20%;
+  border: 5px solid #b5ccdc;
+  border-radius: 50%;
+  box-shadow: 2px 3px 0 #7594b0, 5px 6px 0 #38546d, 0 0 18px #e1f5ff85;
+  object-fit: cover;
+}
+.game-entrance__badge:has(.game-entrance__model.is-ready) .game-entrance__fallback { visibility: hidden; }
+.game-entrance__caption {
+  position: absolute;
+  width: calc(100% - 40px);
+  left: 20px;
+  top: calc(50% + clamp(125px, 18vw, 195px));
+  text-align: center;
+  text-shadow: 0 2px 15px #00162f;
+  opacity: 0;
+}
+.game-entrance.has-arrived .game-entrance__caption {
+  animation: entrance-caption 900ms ease both;
+}
+.game-entrance__eyebrow { font-size: 0.66rem; letter-spacing: 0.22em; color: #b8dfff; }
+.game-entrance__title { margin-top: 8px; font-size: clamp(1.3rem, 3vw, 2rem); font-weight: 600; letter-spacing: 0.1em; }
+.game-entrance__status { margin-top: 9px; font-size: 0.78rem; color: #c2d9ec; }
+.game-entrance__skip {
+  position: absolute;
+  right: max(22px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #d7edff66;
+  border-radius: 2px;
+  background: #04182b9c;
+  color: #e6f3ff;
+  font-size: 0.8rem;
+}
+.game-entrance__skip:hover { background: #1b4463; }
+@keyframes entrance-darken { from { opacity: 0; } to { opacity: 1; } }
+@keyframes entrance-flight {
+  0% { transform: translate(calc(var(--entry-x) - 50vw), calc(var(--entry-y) - 50dvh)) scale(0.008); }
+  18% { transform: translate(calc((var(--entry-x) - 50vw) * 0.85), calc((var(--entry-y) - 50dvh) * 0.85)) scale(0.16); }
+  78% { transform: translate(calc((var(--entry-x) - 50vw) * 0.04), calc((var(--entry-y) - 50dvh) * 0.04)) scale(0.96); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes entrance-charge {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1.65); }
+}
+@keyframes entrance-depart {
+  from { transform: scale(1.65); opacity: 1; }
+  to { transform: scale(6); opacity: 0; }
+}
+@keyframes entrance-light { to { opacity: 0.92; } }
+@keyframes entrance-rays-appear { to { opacity: 0.72; } }
+@keyframes entrance-rays-turn { to { transform: rotate(360deg); } }
+@keyframes entrance-caption { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-height: 520px) {
+  .game-entrance__caption { top: auto; bottom: 30px; }
+  .game-entrance__title { font-size: 1.1rem; }
+  .game-entrance__eyebrow, .game-entrance__status { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-entrance { transition-duration: 220ms; }
+  .game-entrance__flight, .game-entrance.has-arrived .game-entrance__badge, .game-entrance.is-leaving .game-entrance__badge { animation: none; transform: none; }
+  .game-entrance__dark, .game-entrance.has-arrived .game-entrance__caption { animation: none; opacity: 1; }
+  .game-entrance.has-arrived .game-entrance__halo { animation: none; opacity: 0.4; }
+  .game-entrance.has-arrived .game-entrance__rays { animation: none; opacity: 0.15; }
+}

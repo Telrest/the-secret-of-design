@@ -149,7 +149,7 @@
 
 .site-footer__inner {
   display: grid;
-  grid-template-columns: 1.1fr 1fr 1.3fr;
+  grid-template-columns: 1fr 1.3fr;
   gap: 32px;
   padding-block: 36px 44px;
 }
@@ -178,6 +178,23 @@
   color: var(--blueprint);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.site-footer__top {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+}
+
+.site-footer__top-button.btn {
+  width: min(100%, 240px);
+  min-height: 48px;
+}
+
+.site-footer__top-button span {
+  font-size: 1.4rem;
 }
 
 /* ---------- 按钮 ---------- */

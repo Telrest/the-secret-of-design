@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { GameEntranceProvider } from './components/GameEntrance'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 
@@ -15,13 +16,13 @@ export function SiteShell() {
   const immersive = pathname === '/game'
 
   return (
-    <>
+    <GameEntranceProvider>
       <a className="skip-link" href="#main">
         跳到主要内容
       </a>
       <SiteHeader />
       <Outlet />
       {!immersive && <SiteFooter />}
-    </>
+    </GameEntranceProvider>
   )
 }

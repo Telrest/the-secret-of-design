@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useGameEntrance } from '../components/GameEntrance'
 import { DimLine, DrawingFrame } from '../components/DrawingFrame'
 import { SectionHead } from '../components/SectionHead'
 import { SourceLegend } from '../components/SourceTag'
@@ -11,17 +12,26 @@ import { EXHIBITS, EXHIBIT_STATS } from '../exhibits/registry'
  * 不能用 href="#exhibits"：这是 HashRouter，改 hash 等于换路由，
  * 会直接掉进 404。所以拦下默认行为，自己滚过去。
  */
-function scrollToExhibits(event: React.MouseEvent<HTMLAnchorElement>) {
+function scrollToTarget(
+  event: React.MouseEvent<HTMLAnchorElement>,
+  targetId: string,
+  block: ScrollLogicalPosition,
+) {
   event.preventDefault()
-  const target = document.getElementById('exhibits')
+  const target = document.getElementById(targetId)
   if (!target) return
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
-  // 滚完之后把焦点交给这一段，键盘用户接着按 Tab 就是展品列表
+  target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block })
+  // 同时交接键盘焦点；居中的展品卡片可以直接按 Enter 进入。
   target.focus({ preventScroll: true })
 }
 
+function scrollToExhibits(event: React.MouseEvent<HTMLAnchorElement>) {
+  scrollToTarget(event, 'exhibits', 'start')
+}
+
 export default function HomePage() {
+  const { enter } = useGameEntrance()
   return (
     <main id="main" className="page-home">
       {/* ---------------- 展馆入口 ---------------- */}
@@ -30,60 +40,56 @@ export default function HomePage() {
           <div className="hero__text">
             <p className="eyebrow">
               <span className="eyebrow__index">展馆</span>
-              <span className="eyebrow__text">交互式原理展馆 · 第一版</span>
+              <span className="eyebrow__text">交互式原理展馆</span>
             </p>
             <h1 className="hero__title">设计的秘密</h1>
             <p className="hero__lede">
-              <span className="hero__lede-line">拆开一个东西，改变一个条件，</span>
-              <span className="hero__lede-line">看见它为什么这样工作。</span>
+              <span className="hero__lede-line">从一支笔到一台发动机，</span>
+              <span className="hero__lede-line">看见结构，也玩懂原理。</span>
             </p>
             <p className="hero__body">
-              每件展品都是你每天在用、却不一定说得清的东西。展馆把它拆到能看见动作的那一层，
-              再把决定结果的参数交到你手上——为什么是这样工作，由你自己试出来。
+              按下笔帽、切换齿轮、调整成绩、观察骨骼，再沿着气流走进航空发动机。
+              这里有五个可以亲手操作的模型，也有一场把它们串起来的疯狂骑行。
+              好奇哪一个，就从哪一个开始。
             </p>
 
-            <div className="hero__actions">
-              <a className="btn btn--primary" href="#exhibits" onClick={scrollToExhibits}>
-                从第一个问题开始
-              </a>
-              <Link className="btn" to="/about">
-                关于这座展馆
-              </Link>
-            </div>
-
-            <p className="hero__meta">
-              共 {EXHIBIT_STATS.total} 件展品 · 已开放 {EXHIBIT_STATS.ready} 件 · 制作中{' '}
-              {EXHIBIT_STATS.building} 件
-            </p>
           </div>
 
           <div className="hero__drawing">
-            <DrawingFrame label="展馆索引" ariaLabel="展馆索引：五件展品及当前进度">
+            <DrawingFrame label="展馆索引" ariaLabel="展馆索引：点击查看五件展品的详细介绍">
               <ol className="index-list">
                 {EXHIBITS.map((exhibit) => (
                   <li key={exhibit.id} className="index-list__row">
-                    <span className="index-list__num mono">{exhibit.index}</span>
-                    <span className="index-list__title">{exhibit.title}</span>
-                    <span className="index-list__status">{exhibit.statusLabel}</span>
+                    <a
+                      className="index-list__link"
+                      href={`#exhibit-intro-${exhibit.id}`}
+                      onClick={(event) => scrollToTarget(event, `exhibit-intro-${exhibit.id}`, 'center')}
+                      aria-label={`查看${exhibit.title}的详细介绍`}
+                    >
+                      <span className="index-list__num mono">{exhibit.index}</span>
+                      <span className="index-list__title">{exhibit.title}</span>
+                      <span className="index-list__status">查看介绍 <span aria-hidden="true">↘</span></span>
+                    </a>
                   </li>
                 ))}
               </ol>
               <DimLine label="五件展品 · 一条主线：拆开、改变、看见" />
-              <a className="index-more" href="#exhibits" onClick={scrollToExhibits}>
-                <span className="index-more__arrow" aria-hidden="true">
-                  ↓
-                </span>
-                向下翻，内容更详细
-              </a>
             </DrawingFrame>
           </div>
+
+          <a className="index-more" href="#exhibits" onClick={scrollToExhibits}>
+            <span className="index-more__arrow" aria-hidden="true">
+              ↓
+            </span>
+            向下探索五件展品
+          </a>
         </div>
       </section>
 
       {/* ---------------- 番外：独立游戏入口 ---------------- */}
       <section className="section section--mowan">
         <div className="shell">
-          <Link to="/game" className="mowan-teaser">
+          <Link to="/game" className="mowan-teaser" onClick={enter}>
             <div className="mowan-teaser__text">
               <p className="mowan-teaser__eyebrow">番外 · 独立游戏入口</p>
               <h2 className="mowan-teaser__title">为了绩点，我把航空发动机装上了自行车。</h2>
@@ -96,8 +102,21 @@ export default function HomePage() {
                 <span>键盘 / 触屏</span>
                 <span>本地纪录</span>
               </p>
-              <span className="mowan-teaser__cta">进入魔丸模式
-                <span aria-hidden="true">→</span>
+              <span className="mowan-teaser__entry">
+                <span className="mowan-teaser__entry-label">
+                  进入魔丸模式 <span aria-hidden="true">→</span>
+                </span>
+                <span className="mowan-teaser__cta" aria-hidden="true">
+                  <span className="mowan-teaser__nuclear-cap">
+                    <img
+                      className="mowan-teaser__launch-emblem"
+                      src={`${import.meta.env.BASE_URL}mowan/beihang-logo.jpg`}
+                      alt=""
+                      width="34"
+                      height="34"
+                    />
+                  </span>
+                </span>
               </span>
             </div>
 
@@ -135,7 +154,7 @@ export default function HomePage() {
           <ol className="question-list">
             {EXHIBITS.map((exhibit) => (
               <li key={exhibit.id} className="question-list__item">
-                <Link className="question-card" to={`/exhibit/${exhibit.id}`}>
+                <Link id={`exhibit-intro-${exhibit.id}`} className="question-card" to={`/exhibit/${exhibit.id}`}>
                   <span className="question-card__index mono" aria-hidden="true">
                     {exhibit.index}
                   </span>
